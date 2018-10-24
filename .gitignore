@@ -1,0 +1,14 @@
+*.py[cod]
+*.egg
+*.egg-info
+.DS_Store
+.coverage
+.cache
+.pytest_cache
+.tox
+htmlcov/
+dist/
+build/
+docs/_build/
+
+db.sqlite3

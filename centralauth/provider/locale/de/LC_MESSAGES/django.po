@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-13 08:42+0100\n"
+"PO-Revision-Date: 2018-11-13 08:42+0100\n"
+"Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#: provider/models.py:20 provider/models.py:28 provider/models.py:53
+#: provider/models.py:74
+msgid "Application"
+msgstr "Anwendung"
+
+#: provider/models.py:21
+msgid "Applications"
+msgstr "Anwendungen"
+
+#: provider/models.py:29 provider/models.py:51 provider/models.py:56
+msgid "Name"
+msgstr "Name"
+
+#: provider/models.py:30
+msgid "Code name"
+msgstr "Code"
+
+#: provider/models.py:31
+msgid "App label"
+msgstr "App"
+
+#: provider/models.py:32 provider/models.py:103
+msgid "Date (created)"
+msgstr "Angelegt am"
+
+#: provider/models.py:35
+msgid "Application permission"
+msgstr "Anwendungsberechtigung"
+
+#: provider/models.py:36
+msgid "Application permissions"
+msgstr "Anwendungsberechtigungen"
+
+#: provider/models.py:55 provider/models.py:99
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: provider/models.py:59
+msgid "Application permission group"
+msgstr "Anwendungsgruppe"
+
+#: provider/models.py:60
+msgid "Application permission groups"
+msgstr "Anwendungsgruppen"
+
+#: provider/models.py:72
+msgid "User"
+msgstr "Benutzer"
+
+#: provider/models.py:77
+msgid "Superuser status"
+msgstr "Administrator-Status"
+
+#: provider/models.py:80
+msgid ""
+"Designates that this user has all permissions without explicitly assigning "
+"them."
+msgstr "Bestimmt, ob der Benutzer automatisch alle Berechtigungen hat."
+
+#: provider/models.py:85
+msgid "staff status"
+msgstr "Mitarbeiter-Status"
+
+#: provider/models.py:87
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+"Bestimmt ob sich der Benutzer in den Administrationsbereich einloggen kann."
+
+#: provider/models.py:90
+msgid "active"
+msgstr "Aktiv"
+
+#: provider/models.py:93
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Bestimmt ob dieser Benutzer aktiv ist. Ein Benutzer sollte nie gelöscht "
+"werden sondern nur deaktiviert."
+
+#: provider/models.py:101
+msgid "Groups"
+msgstr "Gruppen"
+
+#: provider/models.py:106
+msgid "Application user"
+msgstr "Anwendungsbenutzer"
+
+#: provider/models.py:107
+msgid "Application users"
+msgstr "Anwendungsbenutzer"
