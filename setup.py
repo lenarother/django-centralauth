@@ -26,11 +26,12 @@ setup(
     author_email='info@moccu.com',
     packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=[
-        'django-oauth-toolkit',
-        'python-dateutil',
         'requests',
         'requests-oauthlib'
     ],
+    extras_require={
+        'provider': ['django-oauth-toolkit',],
+    },
     include_package_data=True,
     keywords='django',
     classifiers=[

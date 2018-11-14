@@ -19,7 +19,6 @@ tox = "*"
 django = "*"
 django-oauth-toolkit = "*"
 requests = "*"
-python-dateutil = "*"
 requests-oauthlib = "*"
 
 [requires]
