@@ -16,7 +16,7 @@ OAUTH_STATE_KEY = 'oauth_state'
 def get_oauth_redirect_url(request, next_url=None):
     path = reverse('centralauth_client:login-callback')
     if next_url and is_safe_url(next_url, allowed_hosts=None):
-        path += f'?next={next_url}'
+        path += '?next={}'.format(next_url)
     return request.build_absolute_uri(path)
 
 

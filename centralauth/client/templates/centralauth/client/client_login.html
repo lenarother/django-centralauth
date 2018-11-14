@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>{% block title %}{% trans 'Central Auth Login' %}{% endblock %}</title>
+		<title>{% block title %}{% trans 'Login' %}{% endblock %}</title>
 		<style>
 			html {
 				font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
@@ -21,6 +21,14 @@
 				min-height: 100vh;
 				align-items: center;
 				justify-content: center;
+			}
+
+			div {
+				text-align: center;
+			}
+
+			p {
+				margin-bottom: 2em;
 			}
 
 			.btn {
@@ -41,16 +49,25 @@
 		</style>
 	</head>
 	<body>
-		{% block content %}
-			{% comment %}Additional content goes here{% endcomment %}
-		{% endblock %}
+		<div>
+			{% block content %}
+				{% if user.is_authenticated %}
+				<p>
+					{% blocktrans trimmed %}
+						You are authenticated as {{ username }},<br />
+						but are not authorized to access this page.
+					{% endblocktrans %}
+				</p>
+				{% endif %}
+			{% endblock %}
 
-		{% block login_button %}
-			<a class="btn" href="{% url 'centralauth_client:login' %}">
-				{% block login_button_label %}
-					{% trans 'Login with Central Auth' %}
-				{% endblock %}
-			</a>
-		{% endblock %}
+			{% block login_button %}
+				<a class="btn" href="{% url 'centralauth_client:login' %}{% if next %}?next={{ next }}{% endif %}">
+					{% block login_button_label %}
+						{% trans 'Proceed with login' %}
+					{% endblock %}
+				</a>
+			{% endblock %}
+		</div>
 	</body>
 </html>

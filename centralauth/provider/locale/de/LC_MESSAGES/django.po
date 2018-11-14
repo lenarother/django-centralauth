@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 08:42+0100\n"
-"PO-Revision-Date: 2018-11-13 08:42+0100\n"
+"POT-Creation-Date: 2018-11-14 12:12+0100\n"
+"PO-Revision-Date: 2018-11-14 12:13+0100\n"
 "Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,79 +18,82 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.1.1\n"
 
-#: provider/models.py:20 provider/models.py:28 provider/models.py:53
-#: provider/models.py:74
-msgid "Application"
-msgstr "Anwendung"
+#: admin.py:24
+msgid "Users"
+msgstr "Benutzer"
 
-#: provider/models.py:21
-msgid "Applications"
-msgstr "Anwendungen"
-
-#: provider/models.py:29 provider/models.py:51 provider/models.py:56
-msgid "Name"
-msgstr "Name"
-
-#: provider/models.py:30
-msgid "Code name"
-msgstr "Code"
-
-#: provider/models.py:31
-msgid "App label"
-msgstr "App"
-
-#: provider/models.py:32 provider/models.py:103
-msgid "Date (created)"
-msgstr "Angelegt am"
-
-#: provider/models.py:35
-msgid "Application permission"
-msgstr "Anwendungsberechtigung"
-
-#: provider/models.py:36
-msgid "Application permissions"
-msgstr "Anwendungsberechtigungen"
-
-#: provider/models.py:55 provider/models.py:99
+#: admin.py:30 models.py:55 models.py:100
 msgid "Permissions"
 msgstr "Berechtigungen"
 
-#: provider/models.py:59
+#: models.py:20 models.py:28 models.py:53 models.py:75
+msgid "Application"
+msgstr "Anwendung"
+
+#: models.py:21
+msgid "Applications"
+msgstr "Anwendungen"
+
+#: models.py:29 models.py:51 models.py:57
+msgid "Name"
+msgstr "Name"
+
+#: models.py:30
+msgid "Code name"
+msgstr "Code"
+
+#: models.py:31
+msgid "App label"
+msgstr "App"
+
+#: models.py:32 models.py:104
+msgid "Date (created)"
+msgstr "Angelegt am"
+
+#: models.py:35
+msgid "Application permission"
+msgstr "Anwendungsberechtigung"
+
+#: models.py:36
+msgid "Application permissions"
+msgstr "Anwendungsberechtigungen"
+
+#: models.py:60
 msgid "Application permission group"
 msgstr "Anwendungsgruppe"
 
-#: provider/models.py:60
+#: models.py:61
 msgid "Application permission groups"
 msgstr "Anwendungsgruppen"
 
-#: provider/models.py:72
+#: models.py:73
 msgid "User"
 msgstr "Benutzer"
 
-#: provider/models.py:77
+#: models.py:78
 msgid "Superuser status"
 msgstr "Administrator-Status"
 
-#: provider/models.py:80
+#: models.py:81
 msgid ""
 "Designates that this user has all permissions without explicitly assigning "
 "them."
 msgstr "Bestimmt, ob der Benutzer automatisch alle Berechtigungen hat."
 
-#: provider/models.py:85
+#: models.py:86
 msgid "staff status"
 msgstr "Mitarbeiter-Status"
 
-#: provider/models.py:87
+#: models.py:88
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
 "Bestimmt ob sich der Benutzer in den Administrationsbereich einloggen kann."
 
-#: provider/models.py:90
+#: models.py:91
 msgid "active"
 msgstr "Aktiv"
 
-#: provider/models.py:93
+#: models.py:94
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
@@ -98,14 +101,18 @@ msgstr ""
 "Bestimmt ob dieser Benutzer aktiv ist. Ein Benutzer sollte nie gelöscht "
 "werden sondern nur deaktiviert."
 
-#: provider/models.py:101
+#: models.py:102
 msgid "Groups"
 msgstr "Gruppen"
 
-#: provider/models.py:106
+#: models.py:107
 msgid "Application user"
 msgstr "Anwendungsbenutzer"
 
-#: provider/models.py:107
+#: models.py:108
 msgid "Application users"
 msgstr "Anwendungsbenutzer"
+
+#: oauth2_backends.py:15
+msgid "Your user account is not configured for the requested application."
+msgstr "Angemeldeter Benutzer ist für die Anwendung nicht freigeschaltet."
