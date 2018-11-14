@@ -2,7 +2,6 @@ from django.utils.translation import ugettext
 from oauth2_provider.exceptions import FatalClientError
 from oauth2_provider.oauth2_backends import OAuthLibCore
 from oauthlib.oauth2 import AccessDeniedError
-from two_factor.utils import default_device
 
 
 class CentralauthOAuthBackend(OAuthLibCore):
