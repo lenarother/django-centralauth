@@ -39,11 +39,17 @@ You need to update some of your Django settings.
     OAUTH2_PROVIDER_ACCESS_TOKEN_MODEL = 'oauth2_provider.AccessToken'
     OAUTH2_PROVIDER_APPLICATION_MODEL = 'provider.Application'
 
+* Configure the OAuth2 provider backend class::
+
+    OAUTH2_PROVIDER = {
+        'OAUTH2_BACKEND_CLASS': 'centralauth.provider.oauth2_backends.CentralauthOAuthBackend',
+    }
 
 If you want to re-validate the access more often, you might redurce the lifetime
 of the generated access tokens::
 
     OAUTH2_PROVIDER = {
+        # ...
         'ACCESS_TOKEN_EXPIRE_SECONDS': 5 * 60,
     }
 

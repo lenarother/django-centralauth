@@ -144,6 +144,7 @@ OAUTH2_PROVIDER_ACCESS_TOKEN_MODEL = 'oauth2_provider.AccessToken'
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'provider.Application'
 
 OAUTH2_PROVIDER = {
+    'OAUTH2_BACKEND_CLASS': 'centralauth.provider.oauth2_backends.CentralauthOAuthBackend',
     'ACCESS_TOKEN_EXPIRE_SECONDS': 5 * 60,
 }
 
