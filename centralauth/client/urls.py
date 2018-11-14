@@ -1,10 +1,10 @@
-from django.urls import path
+from django.conf.urls import url
 
 from .views import CallbackView, LoginView
 
 
 app_name = 'centralauth_client'
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),
-    path('login/callback/', CallbackView.as_view(), name='login-callback'),
+    url('^login/$', LoginView.as_view(), name='login'),
+    url('^login/callback/$', CallbackView.as_view(), name='login-callback'),
 ]
