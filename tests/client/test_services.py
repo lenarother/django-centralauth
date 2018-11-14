@@ -1,8 +1,13 @@
+from functools import partial
 from unittest import mock
 
 import pytest
+from requests_oauthlib.oauth2_session import OAuth2Session
 
-from centralauth.client.services import register_perms, serialize_perm
+from centralauth.client.services import (
+    load_token, oauth2_client, register_perms, save_token, serialize_perm, sync_user,
+    update_user)
+from tests.factories import UserFactory
 
 
 @pytest.mark.django_db
@@ -51,9 +56,79 @@ class TestServicesPermissions:
 
 @pytest.mark.django_db
 class TestServicesClient:
-    pass
+
+    def test_oauth2_client_no_session(self, settings):
+        settings.CENTRALAUTH_CLIENT_ID = 'FOOBAR'
+        session = oauth2_client(token='abc')
+
+        assert isinstance(session, OAuth2Session)
+        assert session.token == 'abc'
+        assert session.auto_refresh_url is None
+        assert session.token_updater is None
+        assert session.auto_refresh_kwargs == {}
+        assert session.client_id == 'FOOBAR'
+
+    @mock.patch(
+            'centralauth.client.constants.REFRESH_ENDPOINT',
+            'https://provider.com/o/revoke_token/')
+    def test_oauth2_client_with_session(self, settings):
+        settings.CENTRALAUTH_CLIENT_ID = 'FOOBAR'
+        settings.CENTRALAUTH_CLIENT_SECRET = 'FOOBAR_SECRET'
+        settings.CENTRALAUTH_PROVIDER_URL = 'https://provider.com'
+        session = oauth2_client(token='cde', session='sth')
+
+        assert isinstance(session, OAuth2Session)
+        assert session.auto_refresh_url == 'https://provider.com/o/revoke_token/'
+        assert isinstance(session.token_updater, partial)
+        assert session.auto_refresh_kwargs == {
+            'client_id': 'FOOBAR', 'client_secret': 'FOOBAR_SECRET'}
+        assert session.client_id == 'FOOBAR'
+
+    def test_save_token(self):
+        session = {}
+        save_token(session, '123')
+        assert session['centralauth_token'] == '123'
+
+    def test_load_token(self):
+        session = {'centralauth_token': '567'}
+        token = load_token(session)
+        assert token == '567'
+
+    def test_load_token_update_expires_in(self):
+        session = {'centralauth_token': '567'}
+        token = load_token(session)
+        assert token == '567'
+
+    @mock.patch('centralauth.client.services.time')
+    def test_load_token_session_empty(self, time_mock):
+        time_mock.return_value = 10
+        session = {'centralauth_token': {'expires_at': 60}}
+        token = load_token(session)
+        assert token == {'expires_at': 60, 'expires_in': 50}
 
 
 @pytest.mark.django_db
 class TestServicesUser:
-    pass
+
+    @mock.patch('centralauth.client.services.user_details')
+    @mock.patch('centralauth.client.services.update_user')
+    def test_sync_user_success(self, update_user_mock, user_details_mock):
+        user_details_mock.return_value = {'username': 'foo'}
+        result = sync_user('user', 'client')
+        assert update_user_mock.call_count == 1
+        assert result is True
+
+    @mock.patch('centralauth.client.services.user_details')
+    @mock.patch('centralauth.client.services.update_user')
+    def test_sync_user_failure(self, update_user_mock, user_details_mock):
+        user_details_mock.return_value = None
+        result = sync_user('user', 'client')
+        assert update_user_mock.call_count == 0
+        assert result is False
+
+    def test_user_details(self):
+        pass
+
+    def test_update_user_incorrect_attr_name(self):
+        user = UserFactory.create()
+        update_user(user, foo='foo')
