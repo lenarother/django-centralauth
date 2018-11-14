@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 08:42+0100\n"
-"PO-Revision-Date: 2018-11-13 08:35+0100\n"
+"POT-Creation-Date: 2018-11-14 12:17+0100\n"
+"PO-Revision-Date: 2018-11-14 12:18+0100\n"
 "Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,10 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.1.1\n"
 
-#: client/templates/centralauth/client/client_login.html:6
-msgid "Central Auth Login"
-msgstr "Central Auth Anmeldung"
+#: templates/centralauth/client/client_login.html:6
+msgid "Login"
+msgstr "Anmeldung"
 
-#: client/templates/centralauth/client/client_login.html:52
-msgid "Login with Central Auth"
-msgstr "Anmelden mit Central Auth"
+#: templates/centralauth/client/client_login.html:52
+msgid "Proceed with login"
+msgstr "Mit der Anmeldung fortfahren"
+
+#~ msgid "Central Auth Login"
+#~ msgstr "Central Auth Anmeldung"
+
+#~ msgid "Login with Central Auth"
+#~ msgstr "Anmelden mit Central Auth"
