@@ -1,1 +1,2 @@
-Django>=2.1
+Django
+django-oauth-toolkit
