@@ -67,3 +67,4 @@ class TestCentralAuthSyncMiddleware:
         mock.assert_called()
         assert result['Location'].startswith(settings.LOGIN_URL)
         assert 'next=/foo/' in result['Location']
+        assert request.user.is_authenticated is False
