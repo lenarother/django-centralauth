@@ -92,6 +92,10 @@ def update_user(user, **kwargs):
     for attr, value in kwargs.items():
         if attr in allowed_attributes and hasattr(user, attr):
             setattr(user, attr, value)
+
+    if user.has_usable_password():
+        user.set_unusable_password()
+
     user.save()
 
     updated_permissions = []

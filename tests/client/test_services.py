@@ -132,3 +132,10 @@ class TestServicesUser:
     def test_update_user_incorrect_attr_name(self):
         user = UserFactory.create()
         update_user(user, foo='foo')
+
+    def test_update_user_clear_password(self):
+        user = UserFactory.create()
+        user.set_password('secret')
+        assert user.check_password('secret') is True
+        update_user(user)
+        assert user.check_password('secret') is False
