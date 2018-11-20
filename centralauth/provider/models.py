@@ -19,6 +19,7 @@ class Application(AbstractApplication):
     class Meta(AbstractApplication.Meta):
         verbose_name = _('Application')
         verbose_name_plural = _('Applications')
+        ordering = ('name',)
 
 
 class ApplicationPermission(models.Model):
