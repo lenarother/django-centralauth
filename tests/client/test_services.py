@@ -1,4 +1,3 @@
-from functools import partial
 from unittest import mock
 
 import pytest
@@ -70,7 +69,7 @@ class TestServicesClient:
 
     @mock.patch(
             'centralauth.client.constants.REFRESH_ENDPOINT',
-            'https://provider.com/o/revoke_token/')
+            'https://provider.com/o/token/')
     def test_oauth2_client_with_session(self, settings):
         settings.CENTRALAUTH_CLIENT_ID = 'FOOBAR'
         settings.CENTRALAUTH_CLIENT_SECRET = 'FOOBAR_SECRET'
@@ -78,8 +77,8 @@ class TestServicesClient:
         session = oauth2_client(token='cde', session='sth')
 
         assert isinstance(session, OAuth2Session)
-        assert session.auto_refresh_url == 'https://provider.com/o/revoke_token/'
-        assert isinstance(session.token_updater, partial)
+        assert session.auto_refresh_url == 'https://provider.com/o/token/'
+        assert callable(session.token_updater)
         assert session.auto_refresh_kwargs == {
             'client_id': 'FOOBAR', 'client_secret': 'FOOBAR_SECRET'}
         assert session.client_id == 'FOOBAR'

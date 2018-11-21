@@ -1,6 +1,5 @@
 import json
 import logging
-from functools import partial
 from time import time
 
 import requests
@@ -45,7 +44,7 @@ def oauth2_client(token, session=None):
     if session:
         kwargs.update({
             'auto_refresh_url': constants.REFRESH_ENDPOINT,
-            'token_updater': partial(save_token, session=session),
+            'token_updater': lambda token: save_token(session, token),
             'auto_refresh_kwargs': {
                 'client_id': settings.CENTRALAUTH_CLIENT_ID,
                 'client_secret': settings.CENTRALAUTH_CLIENT_SECRET
