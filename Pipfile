@@ -14,6 +14,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 factory-boy = "*"
 tox = "*"
+mock = "*"
 
 [packages]
 django = "*"
