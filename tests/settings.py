@@ -1,3 +1,6 @@
+import os
+
+
 DEBUG = True
 
 SECRET_KEY = 'test'
@@ -19,12 +22,16 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
 
-    'oauth2_provider',  # provider
     'centralauth.client',  # client
-    'centralauth.provider',  # provider
 ]
 
-MIDDLEWARE = [
+if 'provider' in os.environ.get('TOX_ENV_NAME', 'provider'):
+    INSTALLED_APPS.extend([
+        'oauth2_provider',  # provider
+        'centralauth.provider',  # provider
+    ])
+
+MIDDLEWARE = MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

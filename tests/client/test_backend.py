@@ -1,10 +1,10 @@
-from unittest import mock
-
+import mock
 import pytest
 from django.contrib.auth import get_user_model
 
 from centralauth.client.backends import OAuthBackend
-from tests.factories import UserFactory
+
+from .factories import UserFactory
 
 
 User = get_user_model()

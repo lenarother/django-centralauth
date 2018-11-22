@@ -1,5 +1,6 @@
 import pytest
-from django.urls import reverse
+
+from centralauth.compat import reverse
 
 from ..factories import (
     ApplicationFactory, ApplicationPermissionFactory, ApplicationPermissionGroupFactory,

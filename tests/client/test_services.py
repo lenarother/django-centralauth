@@ -1,12 +1,14 @@
-from unittest import mock
+import json
 
+import mock
 import pytest
 from requests_oauthlib.oauth2_session import OAuth2Session
 
 from centralauth.client.services import (
     load_token, oauth2_client, register_perms, save_token, serialize_perm, sync_user,
     update_user)
-from tests.factories import UserFactory
+
+from .factories import UserFactory
 
 
 @pytest.mark.django_db
@@ -42,15 +44,16 @@ class TestServicesPermissions:
 
         register_perms()
 
-        post_mock.assert_called_with(
-            'https://localhost:8000/provider/perms/',
-            data=(
-                '{"client_id": "TEST_ID", "client_secret": "TEST_SECRET", '
-                '"perms": ["foo", "foo", "foo"]}'),
-            headers={
-                'Content-type': 'application/json',
-                'Accept': 'text/plain'}
-        )
+        assert post_mock.call_args[0] == ('https://localhost:8000/provider/perms/',)
+        assert json.loads(post_mock.call_args[1]['data']) == {
+            'client_id': 'TEST_ID',
+            'client_secret': 'TEST_SECRET',
+            'perms': ['foo', 'foo', 'foo']
+        }
+        assert post_mock.call_args[1]['headers'] == {
+            'Content-type': 'application/json',
+            'Accept': 'text/plain'
+        }
 
 
 @pytest.mark.django_db

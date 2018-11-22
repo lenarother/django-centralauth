@@ -1,7 +1,6 @@
-from unittest.mock import Mock, patch
-
 import pytest
 from django.contrib.auth import get_user_model
+from mock import Mock, patch
 
 from tests.factories import (
     ApplicationFactory, ApplicationPermissionFactory, ApplicationUserFactory, UserFactory)

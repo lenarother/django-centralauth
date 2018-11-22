@@ -1,13 +1,15 @@
 from importlib import import_module
 from time import time
-from unittest.mock import patch
 
 import pytest
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
+from mock import patch
 
 from centralauth.client.middleware import CentralAuthSyncMiddleware
-from tests.factories import UserFactory
+from centralauth.compat import is_authenticated
+
+from .factories import UserFactory
 
 
 session_engine = import_module(settings.SESSION_ENGINE)
@@ -67,4 +69,4 @@ class TestCentralAuthSyncMiddleware:
         mock.assert_called()
         assert result['Location'].startswith(settings.LOGIN_URL)
         assert 'next=/foo/' in result['Location']
-        assert request.user.is_authenticated is False
+        assert is_authenticated(request.user) is False
