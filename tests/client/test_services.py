@@ -2,6 +2,7 @@ import json
 
 import mock
 import pytest
+import requests
 from requests_oauthlib.oauth2_session import OAuth2Session
 
 from centralauth.client.services import (
@@ -120,11 +121,11 @@ class TestServicesUser:
         assert update_user_mock.call_count == 1
         assert result is True
 
-    @mock.patch('centralauth.client.services.user_details')
     @mock.patch('centralauth.client.services.update_user')
-    def test_sync_user_failure(self, update_user_mock, user_details_mock):
-        user_details_mock.return_value = None
-        result = sync_user('user', 'client')
+    def test_sync_user_failure(self, update_user_mock):
+        client = mock.Mock()
+        client.get.side_effect = requests.RequestException()
+        result = sync_user('user', client)
         assert update_user_mock.call_count == 0
         assert result is False
 
@@ -141,3 +142,9 @@ class TestServicesUser:
         assert user.check_password('secret') is True
         update_user(user)
         assert user.check_password('secret') is False
+
+    def test_update_user_no_password(self):
+        user = UserFactory.create()
+        user.set_unusable_password()
+        update_user(user)
+        assert user.has_usable_password() is False
