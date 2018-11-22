@@ -70,5 +70,5 @@ class PermsEndpoint(View):
             'success': True,
             'synced': len(perms_data),
             'created': counter_created,
-            'count': ApplicationPermission.objects.count(),
+            'count': application.applicationpermission_set.count(),
         })
