@@ -2,12 +2,11 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.utils.http import is_safe_url
 from django.views.generic.base import View
 from requests_oauthlib import OAuth2Session
 
 from . import constants, services
+from ..compat import is_safe_url, reverse
 
 
 OAUTH_STATE_KEY = 'oauth_state'
@@ -15,7 +14,7 @@ OAUTH_STATE_KEY = 'oauth_state'
 
 def get_oauth_redirect_url(request, next_url=None):
     path = reverse('centralauth_client:login-callback')
-    if next_url and is_safe_url(next_url, allowed_hosts=None):
+    if next_url and is_safe_url(next_url):
         path += '?next={}'.format(next_url)
     return request.build_absolute_uri(path)
 
@@ -69,12 +68,12 @@ class CallbackView(View):
             client_secret=settings.CENTRALAUTH_CLIENT_SECRET,
         )
 
-        user = authenticate(self.request, token=token)
+        user = authenticate(request=self.request, token=token)
         if user is None:
             raise PermissionDenied
         login(self.request, user)
         services.save_token(self.request.session, token)
 
-        if next_url and is_safe_url(next_url, allowed_hosts=None):
+        if next_url and is_safe_url(next_url):
             return redirect(next_url)
         return redirect(reverse('admin:index'))
