@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.1 (TBD)
+1.0.0 (2018-11-22)
 -----------
 
 * Initial release of `django-centralauth`
