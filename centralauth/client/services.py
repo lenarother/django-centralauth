@@ -8,6 +8,7 @@ from django.contrib.auth.models import Permission
 from requests_oauthlib import OAuth2Session
 
 from . import constants
+from ..compat import m2m_set_objects
 
 
 log = logging.getLogger('centralauth')
@@ -101,5 +102,5 @@ def update_user(user, **kwargs):
     for permission in permissions:
         updated_permissions.append(Permission.objects.get(
             content_type__app_label=permission[0], codename=permission[1]))
-    user.user_permissions.clear()
-    user.user_permissions.set(updated_permissions)
+
+    m2m_set_objects(user.user_permissions, updated_permissions)

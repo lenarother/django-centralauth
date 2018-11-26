@@ -27,3 +27,16 @@ def is_safe_url(url):
         return django_is_safe_url(url)
 
     return django_is_safe_url(url, allowed_hosts=None)
+
+
+def m2m_set_objects(m2m_target, new_set):
+    old_objects = set(m2m_target.all())
+    new_objects = []
+    for obj in new_set:
+        if obj in old_objects:
+            old_objects.remove(obj)
+        else:
+            new_objects.append(obj)
+
+    m2m_target.remove(*old_objects)
+    m2m_target.add(*new_objects)
