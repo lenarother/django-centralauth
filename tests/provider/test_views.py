@@ -104,7 +104,7 @@ class TestPermsEndpoint:
         response_json = response.json()
         assert response_json['success'] is True
         assert response_json['synced'] == 3
-        # assert response_json['created'] == 1
+        assert response_json['created'] == 1
         assert response_json['deleted'] == 0
         assert response_json['count'] == 3 == (
             ApplicationPermission.objects.count())
@@ -146,6 +146,7 @@ class TestPermsEndpoint:
         assert response_json['success'] is True
         assert response_json['synced'] == 3
         assert response_json['created'] == 3
+        assert response_json['deleted'] == 0
         assert response_json['count'] == 3 == (
             ApplicationPermission.objects.count())
 
@@ -171,6 +172,6 @@ class TestPermsEndpoint:
         assert response_json['success'] is True
         assert response_json['synced'] == 1
         assert response_json['created'] == 0
-        # assert response_json['deleted'] == 2
+        assert response_json['deleted'] == 2
         assert response_json['count'] == 1 == (
             ApplicationPermission.objects.count())
