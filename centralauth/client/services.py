@@ -27,6 +27,20 @@ def serialize_perm(perm):
     }
 
 
+def get_perm_hash(perm):
+    """Get unique representation for perm.
+
+    Returns:
+        str: hash of given permission.
+    """
+    perm_str = '{app_label}-{codename}-{repr}'.format(
+        app_label=perm.content_type.app_label,
+        codename=perm.codename,
+        repr=str(perm)
+    )
+    return str(hash(perm_str))
+
+
 def register_perms():
     """Register permissions available in the project to the provider."""
     url = constants.REGISTER_PERMS_ENDPOINT
@@ -34,7 +48,10 @@ def register_perms():
     data = {
         'client_id': settings.CENTRALAUTH_CLIENT_ID,
         'client_secret': settings.CENTRALAUTH_CLIENT_SECRET,
-        'perms': [serialize_perm(perm) for perm in Permission.objects.all()]
+        'perms': {
+            get_perm_hash(perm): serialize_perm(perm) for
+            perm in Permission.objects.all()
+        }
     }
     response = requests.post(url, data=json.dumps(data), headers=headers)
     return response

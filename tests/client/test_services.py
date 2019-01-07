@@ -6,8 +6,8 @@ import requests
 from requests_oauthlib.oauth2_session import OAuth2Session
 
 from centralauth.client.services import (
-    load_token, oauth2_client, register_perms, save_token, serialize_perm, sync_user,
-    update_user)
+    get_perm_hash, load_token, oauth2_client, register_perms, save_token, serialize_perm,
+    sync_user, update_user)
 
 from .factories import UserFactory
 
@@ -33,15 +33,35 @@ class TestServicesPermissions:
             'repr': 'TestApp | Foo | Bar',
         }
 
+        def test_get_perm_hash(self):
+            class MockContentType:
+                app_label = 'TestApp'
+
+            class MockPerm:
+                codename = 'Foo Bar'
+                content_type = MockContentType()
+
+                def __str__(self):
+                    return 'TestApp | Foo | Bar'
+
+            mock_perm = MockPerm()
+            assert get_perm_hash(mock_perm) == (
+                str(hash('TestApp-Foo Bar-TestApp | Foo | Bar')))
+            assert get_perm_hash(mock_perm) == (
+                str(hash('TestApp2-Foo Bar-TestApp2 | Foo | Bar')))
+            assert get_perm_hash(mock_perm) == get_perm_hash(mock_perm)
+
     @mock.patch('centralauth.client.services.requests.post')
     @mock.patch('centralauth.client.services.serialize_perm')
+    @mock.patch('centralauth.client.services.get_perm_hash')
     @mock.patch('centralauth.client.services.Permission.objects.all')
     def test_register_perms(
-            self, perm_manager_mock, serialize_perm_mock, post_mock, settings):
+            self, perm_manager_mock, perm_hash_mock, serialize_perm_mock, post_mock, settings):
         settings.CENTRALAUTH_CLIENT_ID = 'TEST_ID'
         settings.CENTRALAUTH_CLIENT_SECRET = 'TEST_SECRET'
         perm_manager_mock.return_value = [1, 2, 3]
         serialize_perm_mock.return_value = 'foo'
+        perm_hash_mock.return_value = 'bar'
 
         register_perms()
 
@@ -49,7 +69,7 @@ class TestServicesPermissions:
         assert json.loads(post_mock.call_args[1]['data']) == {
             'client_id': 'TEST_ID',
             'client_secret': 'TEST_SECRET',
-            'perms': ['foo', 'foo', 'foo']
+            'perms': {'bar': 'foo', 'bar': 'foo', 'bar': 'foo'}
         }
         assert post_mock.call_args[1]['headers'] == {
             'Content-type': 'application/json',

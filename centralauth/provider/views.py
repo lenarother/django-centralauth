@@ -8,6 +8,7 @@ from django.views.generic.base import View
 from oauth2_provider.views.generic import ProtectedResourceView
 
 from .models import Application, ApplicationPermission, ApplicationUser
+from .services import get_perm_hash
 
 
 class UserEndpoint(ProtectedResourceView):
@@ -56,7 +57,18 @@ class PermsEndpoint(View):
 
         perms_data = data.get('perms', [])
         counter_created = 0
-        for perm in perms_data:
+        counter_deleted = 0
+
+        # Remove outdated perms
+        application_perms = application.applicationpermission_set.all()
+        for perm in application_perms:
+            perm_hash = get_perm_hash(perm)
+            if perm_hash not in perms_data:
+                perm.delete()
+                counter_deleted += 1
+
+        # Add new perms
+        for perm in perms_data.values():
             _, created = ApplicationPermission.objects.get_or_create(
                 application=application,
                 app_label=perm['app_label'],
@@ -70,5 +82,6 @@ class PermsEndpoint(View):
             'success': True,
             'synced': len(perms_data),
             'created': counter_created,
+            'deleted': counter_deleted,
             'count': application.applicationpermission_set.count(),
         })
