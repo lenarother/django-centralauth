@@ -33,7 +33,8 @@ def get_perm_hash(perm):
     Returns:
         str: hash of given permission.
     """
-    perm_str = '{app_label}-{codename}-{repr}'.format(
+    perm_str = '{client_id}-{app_label}-{codename}-{repr}'.format(
+        client_id=settings.CENTRALAUTH_CLIENT_ID,
         app_label=perm.content_type.app_label,
         codename=perm.codename,
         repr=str(perm)

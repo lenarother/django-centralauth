@@ -33,7 +33,9 @@ class TestServicesPermissions:
             'repr': 'TestApp | Foo | Bar',
         }
 
-        def test_get_perm_hash(self):
+        def test_get_perm_hash(self, settings):
+            settings.CENTRALAUTH_CLIENT_ID = 'abc'
+
             class MockContentType:
                 app_label = 'TestApp'
 
@@ -46,9 +48,9 @@ class TestServicesPermissions:
 
             mock_perm = MockPerm()
             assert get_perm_hash(mock_perm) == (
-                str(hash('TestApp-Foo Bar-TestApp | Foo | Bar')))
+                str(hash('abc-TestApp-Foo Bar-TestApp | Foo | Bar')))
             assert get_perm_hash(mock_perm) == (
-                str(hash('TestApp2-Foo Bar-TestApp2 | Foo | Bar')))
+                str(hash('abc-TestApp2-Foo Bar-TestApp2 | Foo | Bar')))
             assert get_perm_hash(mock_perm) == get_perm_hash(mock_perm)
 
     @mock.patch('centralauth.client.services.requests.post')

@@ -6,7 +6,8 @@ def get_perm_hash(perm):
     Returns:
         str: hash of application permission
     """
-    perm_str = '{app_label}-{codename}-{repr}'.format(
+    perm_str = '{client_id}-{app_label}-{codename}-{repr}'.format(
+        client_id=perm.application.client_id,
         app_label=perm.app_label,
         codename=perm.codename,
         repr=perm.repr

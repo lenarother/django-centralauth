@@ -48,12 +48,12 @@ class TestPermsEndpoint:
                 'client_id': 'app1',
                 'client_secret': 'secret1',
                 'perms': {
-                    str(hash('label1-codename1-repr1')):
+                    str(hash('app1-label1-codename1-repr1')):
                         {
                             'app_label': 'label1',
                             'codename': 'codename1',
                             'repr': 'repr1'},
-                    str(hash('label2-codename2-repr2')):
+                    str(hash('app1-label2-codename2-repr2')):
                         {
                             'app_label': 'label2',
                             'codename': 'codename2',
@@ -80,17 +80,17 @@ class TestPermsEndpoint:
                 'client_id': 'app1',
                 'client_secret': 'secret1',
                 'perms': {
-                    str(hash('label1-codename1-repr1')):
+                    str(hash('app1-label1-codename1-repr1')):
                         {
                             'app_label': 'label1',
                             'codename': 'codename1',
                             'repr': 'repr1'},
-                    str(hash('label2-codename2-repr2')):
+                    str(hash('app1-label2-codename2-repr2')):
                         {
                             'app_label': 'label2',
                             'codename': 'codename2',
                             'repr': 'repr2'},
-                    str(hash('label3-codename3-repr3')):
+                    str(hash('app1-label3-codename3-repr3')):
                         {
                             'app_label': 'label3',
                             'codename': 'codename3',
@@ -120,17 +120,17 @@ class TestPermsEndpoint:
                 'client_id': 'app1',
                 'client_secret': 'secret1',
                 'perms': {
-                    str(hash('label1-codename1-repr1')):
+                    str(hash('app1-label1-codename1-repr1')):
                         {
                             'app_label': 'label1',
                             'codename': 'codename1',
                             'repr': 'repr1'},
-                    str(hash('label2-codename2-repr2')):
+                    str(hash('app1-label2-codename2-repr2')):
                         {
                             'app_label': 'label2',
                             'codename': 'codename2',
                             'repr': 'repr2'},
-                    str(hash('label3-codename3-repr3')):
+                    str(hash('app1-label3-codename3-repr3')):
                         {
                             'app_label': 'label3',
                             'codename': 'codename3',
@@ -156,7 +156,7 @@ class TestPermsEndpoint:
                 'client_id': 'app1',
                 'client_secret': 'secret1',
                 'perms': {
-                    str(hash('label1-codename1-repr1')):
+                    str(hash('app1-label1-codename1-repr1')):
                         {
                             'app_label': 'label1',
                             'codename': 'codename1',
