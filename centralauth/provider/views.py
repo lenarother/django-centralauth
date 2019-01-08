@@ -56,19 +56,26 @@ class PermsEndpoint(View):
 
         perms_data = data.get('perms', [])
         counter_created = 0
+
+        old_perms = application.applicationpermission_set.all()
         for perm in perms_data:
-            _, created = ApplicationPermission.objects.get_or_create(
+            perm_obj, created = ApplicationPermission.objects.get_or_create(
                 application=application,
                 app_label=perm['app_label'],
                 codename=perm['codename'],
                 repr=perm['repr']
             )
+            old_perms = old_perms.exclude(pk=perm_obj.pk)
             if created:
                 counter_created += 1
+
+        counter_deleted = old_perms.count()
+        old_perms.delete()
 
         return JsonResponse({
             'success': True,
             'synced': len(perms_data),
             'created': counter_created,
+            'deleted': counter_deleted,
             'count': application.applicationpermission_set.count(),
         })
