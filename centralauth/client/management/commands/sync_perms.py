@@ -30,9 +30,10 @@ class Command(BaseCommand):
 
         self.stdout.write(
             'Operation successful. {0} permissions synced, {1} permissions '
-            'created. Permissions count: {2}.'.format(
+            'created, {2} permissions deleted. Permissions count: {3}.'.format(
                 response_json['synced'],
                 response_json['created'],
+                response_json['deleted'],
                 response_json['count'],
             )
         )
