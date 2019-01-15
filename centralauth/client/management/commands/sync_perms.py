@@ -27,6 +27,7 @@ class Command(BaseCommand):
 
         if not response_json['success']:
             self.stdout.write('Operation failed.')
+            return
 
         self.stdout.write(
             'Operation successful. {0} permissions synced, {1} permissions '

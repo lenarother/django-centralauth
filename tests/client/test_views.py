@@ -28,3 +28,11 @@ class TestLoginView:
         response = client.get('/client/login/', secure=True)
         assert response.status_code == 302
         assert response['Location'].startswith(settings.CENTRALAUTH_PROVIDER_URL)
+
+
+@pytest.mark.django_db
+class TestCallbackView:
+
+    def test_forbidden(self, client, settings):
+        response = client.get('/client/login/callback/', secure=True)
+        assert response.status_code == 403
