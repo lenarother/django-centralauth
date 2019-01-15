@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.1 (2018-11-26)
+1.1.1 (2019-01-10)
 ------------------
 
 * Fix permissions sync - remove deleted permissions
