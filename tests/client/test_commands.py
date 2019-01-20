@@ -1,10 +1,16 @@
-from io import StringIO
+import sys
 
 import mock
 import pytest
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from requests.exceptions import ConnectionError
+
+
+if sys.version_info[0] < 3:
+    from StringIO import StringIO
+else:
+    from io import StringIO
 
 
 @pytest.mark.django_db
