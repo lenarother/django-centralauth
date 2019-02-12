@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.1.2 (2019-02-12)
+------------------
+
+* Fix bug in get_or_create of permission sync api endpoint
+
+
 1.1.1 (2019-01-10)
 ------------------
 
