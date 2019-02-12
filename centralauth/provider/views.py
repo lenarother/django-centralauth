@@ -63,7 +63,7 @@ class PermsEndpoint(View):
                 application=application,
                 app_label=perm['app_label'],
                 codename=perm['codename'],
-                repr=perm['repr']
+                defaults={'repr': perm['repr']},
             )
             old_perms = old_perms.exclude(pk=perm_obj.pk)
             if created:
