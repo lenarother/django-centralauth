@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.2.0 (2019-02-22)
+------------------
+
+* django-centralauth now depends on requests-oauthlib >= 1.2.0 and therefore oauthlib >= 3.0
+* Fixed some race conditions in middleware (when tokens are refreshed twice)
+
 1.1.2 (2019-02-12)
 ------------------
 
