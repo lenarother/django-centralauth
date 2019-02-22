@@ -1,5 +1,6 @@
 import factory
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 
 from centralauth.provider.models import (
     Application, ApplicationPermission, ApplicationPermissionGroup, ApplicationUser)
@@ -19,6 +20,13 @@ class UserFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = User
+
+    @classmethod
+    def _adjust_kwargs(cls, **kwargs):
+        raw_password = kwargs.pop('raw_password', 'secret')
+        if 'password' not in kwargs:
+            kwargs['password'] = make_password(raw_password)
+        return super()._adjust_kwargs(**kwargs)
 
 
 class ApplicationPermissionFactory(factory.DjangoModelFactory):
