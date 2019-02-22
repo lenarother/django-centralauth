@@ -57,6 +57,11 @@ def oauth2_client(token, session=None):
 def save_token(session, token):
     session['centralauth_token'] = token
 
+    # If the session supports saving, we do it asap to ensure other requests "see"
+    # the new access token and don't try to use an old refresh/access token.
+    if hasattr(session, 'save'):
+        session.save()
+
 
 def load_token(session):
     token = session.get('centralauth_token', None)
