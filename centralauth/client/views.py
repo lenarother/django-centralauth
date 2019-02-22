@@ -64,6 +64,7 @@ class CallbackView(View):
         )
         token = oauth.fetch_token(
             token_url=constants.TOKEN_ENDPOINT,
+            include_client_id=True,
             code=grant_code,
             client_secret=settings.CENTRALAUTH_CLIENT_SECRET,
         )
