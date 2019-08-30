@@ -5,8 +5,8 @@ from django.shortcuts import redirect
 from django.views.generic.base import View
 from requests_oauthlib import OAuth2Session
 
-from . import constants, services
 from ..compat import is_safe_url, reverse
+from . import constants, services
 
 
 OAUTH_STATE_KEY = 'oauth_state'

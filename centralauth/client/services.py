@@ -7,8 +7,8 @@ from django.conf import settings
 from django.contrib.auth.models import Permission
 from requests_oauthlib import OAuth2Session
 
-from . import constants
 from ..compat import m2m_set_objects
+from . import constants
 
 
 log = logging.getLogger('centralauth')

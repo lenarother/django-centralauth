@@ -18,7 +18,6 @@ mock = "*"
 
 [packages]
 django = "*"
-django-oauth-toolkit = "*"
 requests = "*"
 requests-oauthlib = "*"
 
