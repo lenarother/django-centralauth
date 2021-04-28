@@ -32,26 +32,22 @@ Features
 Requirements
 ------------
 
-django-centralauth supports Python 3 only and requires at least Django 1.11 and django-oauth-toolkit.
+django-centralauth supports Python 3 only and requires at least Django 2. and django-oauth-toolkit.
 
 
 Prepare for development
 -----------------------
 
-A Python 3.6 interpreter is required in addition to pipenv.
-
 .. code-block:: shell
 
-    $ pipenv install --python 3.6 --dev
-    $ pipenv shell
-    $ pip install -e .
+    $ poetry install
 
 
 Now you're ready to run the tests:
 
 .. code-block:: shell
 
-    $ pipenv run py.test
+    $ poetry run py.test
 
 
 Resources
