@@ -66,6 +66,12 @@ skip-numeric-underscore-normalization = true
 include = "\\.pyi?$"
 exclude = "/(\\.git|\\.tox|build|dist|migrations)/"
 
+[tool.isort]
+profile = "hug"
+src_paths = ["centralauth", "tests"]
+skip_glob = ["*/migrations/*.py"]
+lines_after_imports = 2
+
 [tool.coverage.run]
 branch = true
 source = ["centralauth"]
