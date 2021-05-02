@@ -64,12 +64,12 @@ line-length = 96
 skip-string-normalization = true
 skip-numeric-underscore-normalization = true
 include = "\\.pyi?$"
-exclude = "/(\\.git|\\.tox|build|dist)/"
+exclude = "/(\\.git|\\.tox|build|dist|migrations)/"
 
 [tool.coverage.run]
 branch = true
 source = ["centralauth"]
-omit = ["*/__init__.py"]
+omit = ["*/__init__.py", "*/migrations/*"]
 
 [tool.coverage.report]
 exclude_lines = ["raise NotImplementedError"]
