@@ -1,6 +1,6 @@
 import json
 
-import mock
+from unittest import mock
 import pytest
 import requests
 from requests_oauthlib.oauth2_session import OAuth2Session

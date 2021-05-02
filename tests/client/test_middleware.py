@@ -4,7 +4,7 @@ from time import time
 import pytest
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
-from mock import patch
+from unittest.mock import patch
 from oauthlib.oauth2.rfc6749.errors import FatalClientError
 
 from centralauth.client.middleware import CentralAuthSyncMiddleware

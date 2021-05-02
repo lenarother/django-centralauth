@@ -9,13 +9,13 @@ from centralauth.provider.models import (
 User = get_user_model()
 
 
-class ApplicationFactory(factory.DjangoModelFactory):
+class ApplicationFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Application
 
 
-class UserFactory(factory.DjangoModelFactory):
+class UserFactory(factory.django.DjangoModelFactory):
     username = factory.Faker('user_name')
 
     class Meta:
@@ -29,7 +29,7 @@ class UserFactory(factory.DjangoModelFactory):
         return super()._adjust_kwargs(**kwargs)
 
 
-class ApplicationPermissionFactory(factory.DjangoModelFactory):
+class ApplicationPermissionFactory(factory.django.DjangoModelFactory):
     application = factory.SubFactory(ApplicationFactory)
     app_label = 'foo'
     codename = factory.Sequence(lambda n: f'add_{n}')
@@ -39,7 +39,7 @@ class ApplicationPermissionFactory(factory.DjangoModelFactory):
         model = ApplicationPermission
 
 
-class ApplicationPermissionGroupFactory(factory.DjangoModelFactory):
+class ApplicationPermissionGroupFactory(factory.django.DjangoModelFactory):
     application = factory.SubFactory(ApplicationFactory)
     name = factory.Faker('text', max_nb_chars=255)
 
@@ -56,7 +56,7 @@ class ApplicationPermissionGroupFactory(factory.DjangoModelFactory):
                 self.permissions.add(permission)
 
 
-class ApplicationUserFactory(factory.DjangoModelFactory):
+class ApplicationUserFactory(factory.django.DjangoModelFactory):
     application = factory.SubFactory(ApplicationFactory)
     user = factory.SubFactory(UserFactory)
 

@@ -41,6 +41,7 @@ pytest-flake8 = ">=1.0"
 pytest-isort = ">=2.0"
 pytest-black = ">=0.3"
 pytest-snapshot = ">=0.6"
+factory-boy = ">=3.2"
 coverage = {version = ">=5.5", extras = ["toml"]}
 
 [tool.poetry.extras]
