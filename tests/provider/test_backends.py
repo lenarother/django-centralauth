@@ -8,13 +8,13 @@ from ..factories import ApplicationFactory, ApplicationUserFactory
 
 @pytest.mark.django_db
 class TestCentralauthOAuthBackend:
-
     def test_user_can_access_app(self, rf):
         backend = CentralauthOAuthBackend()
         test_app = ApplicationFactory.create(
             client_id='app1',
             client_secret='secret1',
-            redirect_uris='http://localhost:9000/client/login/callback/')
+            redirect_uris='http://localhost:9000/client/login/callback/',
+        )
         test_user = ApplicationUserFactory.create(application=test_app)
         test_user_no_access = ApplicationUserFactory.create()
 
@@ -28,7 +28,7 @@ class TestCentralauthOAuthBackend:
                 'client_id': 'app1',
                 'redirect_uri': 'http://localhost:9000/client/login/callback/',
                 'state': 'state123',
-            }
+            },
         )
         request.user = test_user.user
 
@@ -43,7 +43,7 @@ class TestCentralauthOAuthBackend:
                 'client_id': 'app1',
                 'response_type': 'code',
             },
-            allow=True
+            allow=True,
         )
 
         # create_authorization_response user has no permissions for app
@@ -59,5 +59,5 @@ class TestCentralauthOAuthBackend:
                     'client_id': 'app1',
                     'response_type': 'code',
                 },
-                allow=True
+                allow=True,
             )

@@ -11,6 +11,7 @@ except ImportError:
 try:
     from django.utils.deprecation import MiddlewareMixin
 except ImportError:
+
     class MiddlewareMixin:
         pass
 

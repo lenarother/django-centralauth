@@ -4,7 +4,6 @@ from centralauth.client import views
 
 
 class TestGetOAuthRedirectUrl:
-
     def test_simple(self, rf):
         request = rf.get('/', secure=True)
         redirect = views.get_oauth_redirect_url(request)
@@ -23,7 +22,6 @@ class TestGetOAuthRedirectUrl:
 
 @pytest.mark.django_db
 class TestLoginView:
-
     def test_get(self, client, settings):
         response = client.get('/client/login/', secure=True)
         assert response.status_code == 302
@@ -32,7 +30,6 @@ class TestLoginView:
 
 @pytest.mark.django_db
 class TestCallbackView:
-
     def test_forbidden(self, client, settings):
         response = client.get('/client/login/callback/', secure=True)
         assert response.status_code == 403

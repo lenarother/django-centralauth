@@ -18,12 +18,14 @@ class Command(BaseCommand):
                     'Permissions endpoint returned 403. '
                     'Ensure you have apllication cleint_id and client_secret '
                     'set in your settings and client application with these '
-                    'credentials exists on your provider server.')
+                    'credentials exists on your provider server.'
+                )
             response_json = response.json()
         except ConnectionError:
             raise CommandError(
                 'Could not connect to the provider perms endpoint. '
-                'Check whether your centralauth provider server is running.')
+                'Check whether your centralauth provider server is running.'
+            )
 
         if not response_json['success']:
             self.stdout.write('Operation failed.')

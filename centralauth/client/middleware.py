@@ -11,7 +11,6 @@ from . import services
 
 
 class CentralAuthSyncMiddleware(MiddlewareMixin):
-
     def process_request(self, request, retries=0):
         if not is_authenticated(request.user):
             return
@@ -24,7 +23,8 @@ class CentralAuthSyncMiddleware(MiddlewareMixin):
             # We might have triggered a race condition (two refreshes in parallel).
             # We check if we have a "newer" token in the session.
             request.session['centralauth_token'] = request.session.load().get(
-                'centralauth_token')
+                'centralauth_token'
+            )
 
         token = services.load_token(request.session) or {}
         if token.get('expires_at', 0) > time():

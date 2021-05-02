@@ -1,9 +1,14 @@
-import pytest
-from django.contrib.auth import get_user_model
 from unittest.mock import Mock, patch
 
+import pytest
+from django.contrib.auth import get_user_model
+
 from tests.factories import (
-    ApplicationFactory, ApplicationPermissionFactory, ApplicationUserFactory, UserFactory)
+    ApplicationFactory,
+    ApplicationPermissionFactory,
+    ApplicationUserFactory,
+    UserFactory,
+)
 
 
 User = get_user_model()
@@ -18,9 +23,9 @@ def test_initial_roundtrip(client, settings):
     app = ApplicationFactory(
         client_id=settings.CENTRALAUTH_CLIENT_ID,
         client_secret=settings.CENTRALAUTH_CLIENT_SECRET,
-        redirect_uris='https://testserver/client/login/callback/')
-    perm = ApplicationPermissionFactory(
-        application=app, codename='add_group', app_label='auth')
+        redirect_uris='https://testserver/client/login/callback/',
+    )
+    perm = ApplicationPermissionFactory(application=app, codename='add_group', app_label='auth')
     app_user = ApplicationUserFactory(application=app, user=user)
     app_user.permissions.add(perm)
 
@@ -55,9 +60,7 @@ def test_initial_roundtrip(client, settings):
         headers.pop('Content-Type', None)
         for header, value in headers.items():
             extra[f'HTTP_{header.upper().replace("-", "_")}'] = value
-        response = client_method(
-            path=url, data=data,
-            secure=True, **extra)
+        response = client_method(path=url, data=data, secure=True, **extra)
         response.request = Mock()
         response.text = response.content
         response.headers = {}
@@ -66,7 +69,7 @@ def test_initial_roundtrip(client, settings):
 
     # Finish login with client callback. Expects the client to fetch
     # an access_token, get the user details and update the user.
-    redirect = redirect[redirect.index('/client/login/callback'):]
+    redirect = redirect[redirect.index('/client/login/callback') :]
     with patch('requests_oauthlib.oauth2_session.requests.Session.request') as mock:
         mock.side_effect = patched_oauthlib_request
         response = client.get(redirect, secure=True)

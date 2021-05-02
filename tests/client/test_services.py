@@ -1,20 +1,25 @@
 import json
-
 from unittest import mock
+
 import pytest
 import requests
 from requests_oauthlib.oauth2_session import OAuth2Session
 
 from centralauth.client.services import (
-    load_token, oauth2_client, register_perms, save_token, serialize_perm, sync_user,
-    update_user)
+    load_token,
+    oauth2_client,
+    register_perms,
+    save_token,
+    serialize_perm,
+    sync_user,
+    update_user,
+)
 
 from .factories import UserFactory
 
 
 @pytest.mark.django_db
 class TestServicesPermissions:
-
     def test_serialize_perm(self):
         class MockContentType:
             app_label = 'TestApp'
@@ -36,8 +41,7 @@ class TestServicesPermissions:
     @mock.patch('centralauth.client.services.requests.post')
     @mock.patch('centralauth.client.services.serialize_perm')
     @mock.patch('centralauth.client.services.Permission.objects.all')
-    def test_register_perms(
-            self, perm_manager_mock, serialize_perm_mock, post_mock, settings):
+    def test_register_perms(self, perm_manager_mock, serialize_perm_mock, post_mock, settings):
         settings.CENTRALAUTH_CLIENT_ID = 'TEST_ID'
         settings.CENTRALAUTH_CLIENT_SECRET = 'TEST_SECRET'
         perm_manager_mock.return_value = [1, 2, 3]
@@ -49,17 +53,16 @@ class TestServicesPermissions:
         assert json.loads(post_mock.call_args[1]['data']) == {
             'client_id': 'TEST_ID',
             'client_secret': 'TEST_SECRET',
-            'perms': ['foo', 'foo', 'foo']
+            'perms': ['foo', 'foo', 'foo'],
         }
         assert post_mock.call_args[1]['headers'] == {
             'Content-type': 'application/json',
-            'Accept': 'text/plain'
+            'Accept': 'text/plain',
         }
 
 
 @pytest.mark.django_db
 class TestServicesClient:
-
     def test_oauth2_client_no_session(self, settings):
         settings.CENTRALAUTH_CLIENT_ID = 'FOOBAR'
         session = oauth2_client(token='abc')
@@ -72,8 +75,8 @@ class TestServicesClient:
         assert session.client_id == 'FOOBAR'
 
     @mock.patch(
-            'centralauth.client.constants.REFRESH_ENDPOINT',
-            'https://provider.com/o/token/')
+        'centralauth.client.constants.REFRESH_ENDPOINT', 'https://provider.com/o/token/'
+    )
     def test_oauth2_client_with_session(self, settings):
         settings.CENTRALAUTH_CLIENT_ID = 'FOOBAR'
         settings.CENTRALAUTH_CLIENT_SECRET = 'FOOBAR_SECRET'
@@ -84,7 +87,9 @@ class TestServicesClient:
         assert session.auto_refresh_url == 'https://provider.com/o/token/'
         assert callable(session.token_updater)
         assert session.auto_refresh_kwargs == {
-            'client_id': 'FOOBAR', 'client_secret': 'FOOBAR_SECRET'}
+            'client_id': 'FOOBAR',
+            'client_secret': 'FOOBAR_SECRET',
+        }
         assert session.client_id == 'FOOBAR'
 
     def test_save_token(self):
@@ -112,7 +117,6 @@ class TestServicesClient:
 
 @pytest.mark.django_db
 class TestServicesUser:
-
     @mock.patch('centralauth.client.services.user_details')
     @mock.patch('centralauth.client.services.update_user')
     def test_sync_user_success(self, update_user_mock, user_details_mock):
