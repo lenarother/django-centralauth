@@ -13,9 +13,9 @@ django-centralauth
    :target: https://django-centralauth.readthedocs.io/en/stable/?badge=latest
    :alt: Documentation Status
 
-.. image:: https://travis-ci.org/moccu/django-centralauth.svg?branch=master
-   :target: https://travis-ci.org/moccu/django-centralauth
-
+.. image:: https://github.com/lenarother/django-centralauth/workflows/Test/badge.svg?branch=master
+   :target: https://github.com/lenarother/django-centralauth/actions?workflow=Test
+   :alt: CI Status
 
 django-centralauth solves the problem of managing user access and permissions
 from multiple projects in one central place.
