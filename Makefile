@@ -1,27 +1,29 @@
-.PHONY: clean tests cov docs release
-
-VERSION = $(shell pipenv run python -c "print(__import__('centralauth').__version__)")
+.PHONY: clean correct docs pytests tests coverage-html release
+.ONESHELL: release
 
 clean:
-	rm -fr docs/_build build/ dist/
-	pipenv run make -C docs clean
+	find . -name '*.pyc' -delete
+	rm -fr build/ dist/ htmlcov/ __pycache__
+	poetry run make -C docs clean
 
-tests:
-	pipenv run py.test --cov
-
-cov: tests
-	pipenv run coverage html
-	@echo open htmlcov/index.html
-
-apidoc:
-	pipenv run make -C docs apidoc
+correct:
+	poetry run isort centralauth tests
+	poetry run black -q centralauth tests
 
 docs:
-	pipenv run make -C docs html
-	@echo open docs/_build/html/index.html
+	poetry run make -C docs html
+
+pytests:
+	@PYTHONPATH=$(CURDIR):${PYTHONPATH} poetry run pytest
+
+tests:
+	@PYTHONPATH=$(CURDIR):${PYTHONPATH} poetry run pytest --cov --isort --flake8 --black
+
+coverage-html: pytests
+	poetry run coverage html
 
 release:
-	@echo About to release ${VERSION}; read
-	pipenv run python setup.py sdist upload
-	pipenv run python setup.py bdist_wheel upload
-	git tag -a "${VERSION}" -m "Version ${VERSION}" && git push --follow-tags
+	@VERSION=`poetry version -s`
+	@echo About to release $${VERSION}
+	@echo [ENTER] to continue; read
+	git tag -a "$${VERSION}" -m "Version $${VERSION}" && git push --follow-tags

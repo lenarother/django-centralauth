@@ -8,32 +8,38 @@ from ..factories import ApplicationFactory, ApplicationUserFactory
 
 @pytest.mark.django_db
 class TestAuthorizeRefresh:
-
     def get_token(self, client):
         app = ApplicationFactory.create(
             client_id='app1',
             client_secret='secret1',
-            redirect_uris='http://localhost:9000/client/login/callback/')
+            redirect_uris='http://localhost:9000/client/login/callback/',
+        )
         app_user = ApplicationUserFactory.create(application=app)
         user = app_user.user
 
         assert client.login(username=user.username, password='secret') is True
 
-        response = client.get('/provider/o/authorize/', {
-            'client_id': 'app1',
-            'redirect_uri': 'http://localhost:9000/client/login/callback/',
-            'response_type': 'code',
-            'state': 'state123',
-        })
+        response = client.get(
+            '/provider/o/authorize/',
+            {
+                'client_id': 'app1',
+                'redirect_uri': 'http://localhost:9000/client/login/callback/',
+                'response_type': 'code',
+                'state': 'state123',
+            },
+        )
         code = re.match('.*code=([^&]+)', response['Location']).group(1)
 
-        response = Client().post('/provider/o/token/', {
-            'client_id': 'app1',
-            'client_secret': 'secret1',
-            'redirect_uri': 'http://localhost:9000/client/login/callback/',
-            'grant_type': 'authorization_code',
-            'code': code,
-        })
+        response = Client().post(
+            '/provider/o/token/',
+            {
+                'client_id': 'app1',
+                'client_secret': 'secret1',
+                'redirect_uri': 'http://localhost:9000/client/login/callback/',
+                'grant_type': 'authorization_code',
+                'code': code,
+            },
+        )
 
         return (app, app_user, response.json())
 
@@ -46,12 +52,15 @@ class TestAuthorizeRefresh:
         app, app_user, token = self.get_token(client)
         user = app_user.user
 
-        response = Client().post('/provider/o/token/', {
-            'client_id': 'app1',
-            'client_secret': 'secret1',
-            'grant_type': 'refresh_token',
-            'refresh_token': token['refresh_token'],
-        })
+        response = Client().post(
+            '/provider/o/token/',
+            {
+                'client_id': 'app1',
+                'client_secret': 'secret1',
+                'grant_type': 'refresh_token',
+                'refresh_token': token['refresh_token'],
+            },
+        )
 
         new_token = response.json()
 
@@ -68,20 +77,26 @@ class TestAuthorizeRefresh:
         user = app_user.user
 
         # First refresh
-        response = Client().post('/provider/o/token/', {
-            'client_id': 'app1',
-            'client_secret': 'secret1',
-            'grant_type': 'refresh_token',
-            'refresh_token': token['refresh_token'],
-        })
+        response = Client().post(
+            '/provider/o/token/',
+            {
+                'client_id': 'app1',
+                'client_secret': 'secret1',
+                'grant_type': 'refresh_token',
+                'refresh_token': token['refresh_token'],
+            },
+        )
         new_token1 = response.json()
 
-        response = Client().post('/provider/o/token/', {
-            'client_id': 'app1',
-            'client_secret': 'secret1',
-            'grant_type': 'refresh_token',
-            'refresh_token': token['refresh_token'],
-        })
+        response = Client().post(
+            '/provider/o/token/',
+            {
+                'client_id': 'app1',
+                'client_secret': 'secret1',
+                'grant_type': 'refresh_token',
+                'refresh_token': token['refresh_token'],
+            },
+        )
         new_token2 = response.json()
 
         # New token 1

@@ -5,16 +5,17 @@ django-centralauth
    :target: https://pypi.org/project/django-centralauth/
    :alt: Latest Version
 
-.. image:: https://codecov.io/gh/moccu/django-centralauth/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/moccu/django-centralauth
+.. image:: https://github.com/lenarother/django-centralauth/workflows/Test/badge.svg?branch=master
+   :target: https://github.com/lenarother/django-centralauth/actions?workflow=Test
+   :alt: CI Status
+
+.. image:: https://codecov.io/gh/lenarother/django-centralauth/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/lenarother/django-centralauth
    :alt: Coverage Status
 
 .. image:: https://readthedocs.org/projects/django-centralauth/badge/?version=latest
    :target: https://django-centralauth.readthedocs.io/en/stable/?badge=latest
    :alt: Documentation Status
-
-.. image:: https://travis-ci.org/moccu/django-centralauth.svg?branch=master
-   :target: https://travis-ci.org/moccu/django-centralauth
 
 
 django-centralauth solves the problem of managing user access and permissions
@@ -32,26 +33,22 @@ Features
 Requirements
 ------------
 
-django-centralauth supports Python 3 only and requires at least Django 1.11 and django-oauth-toolkit.
+django-centralauth supports Python 3 only and requires at least Django 2. and django-oauth-toolkit.
 
 
 Prepare for development
 -----------------------
 
-A Python 3.6 interpreter is required in addition to pipenv.
-
 .. code-block:: shell
 
-    $ pipenv install --python 3.6 --dev
-    $ pipenv shell
-    $ pip install -e .
+    $ poetry install
 
 
 Now you're ready to run the tests:
 
 .. code-block:: shell
 
-    $ pipenv run py.test
+    $ poetry run py.test
 
 
 Resources

@@ -21,25 +21,25 @@ class UserEndpoint(ProtectedResourceView):
         token = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
         application = user.oauth2_provider_accesstoken.get(token=token).application
         try:
-            app_user = ApplicationUser.objects.get(
-                user=user, application=application)
+            app_user = ApplicationUser.objects.get(user=user, application=application)
         except ApplicationUser.DoesNotExist:
             raise PermissionDenied
 
-        return JsonResponse({
-            'username': user.username,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'email': user.email,
-            'is_superuser': app_user.is_superuser,
-            'is_staff': app_user.is_staff,
-            'is_active': app_user.is_active,
-            'permissions': app_user.get_permissions()
-        })
+        return JsonResponse(
+            {
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'is_superuser': app_user.is_superuser,
+                'is_staff': app_user.is_staff,
+                'is_active': app_user.is_active,
+                'permissions': app_user.get_permissions(),
+            }
+        )
 
 
 class PermsEndpoint(View):
-
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PermsEndpoint, self).dispatch(request, *args, **kwargs)
@@ -49,8 +49,7 @@ class PermsEndpoint(View):
         if not data.get('client_id', None) or not data.get('client_secret', None):
             raise PermissionDenied
 
-        application = Application.objects.filter(
-            client_id=data['client_id']).first()
+        application = Application.objects.filter(client_id=data['client_id']).first()
         if not application or application.client_secret != data['client_secret']:
             raise PermissionDenied
 
@@ -72,10 +71,12 @@ class PermsEndpoint(View):
         counter_deleted = old_perms.count()
         old_perms.delete()
 
-        return JsonResponse({
-            'success': True,
-            'synced': len(perms_data),
-            'created': counter_created,
-            'deleted': counter_deleted,
-            'count': application.applicationpermission_set.count(),
-        })
+        return JsonResponse(
+            {
+                'success': True,
+                'synced': len(perms_data),
+                'created': counter_created,
+                'deleted': counter_deleted,
+                'count': application.applicationpermission_set.count(),
+            }
+        )

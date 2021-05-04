@@ -34,7 +34,7 @@ def register_perms():
     data = {
         'client_id': settings.CENTRALAUTH_CLIENT_ID,
         'client_secret': settings.CENTRALAUTH_CLIENT_SECRET,
-        'perms': [serialize_perm(perm) for perm in Permission.objects.all()]
+        'perms': [serialize_perm(perm) for perm in Permission.objects.all()],
     }
     response = requests.post(url, data=json.dumps(data), headers=headers)
     return response
@@ -43,14 +43,16 @@ def register_perms():
 def oauth2_client(token, session=None):
     kwargs = {}
     if session:
-        kwargs.update({
-            'auto_refresh_url': constants.REFRESH_ENDPOINT,
-            'token_updater': lambda token: save_token(session, token),
-            'auto_refresh_kwargs': {
-                'client_id': settings.CENTRALAUTH_CLIENT_ID,
-                'client_secret': settings.CENTRALAUTH_CLIENT_SECRET
-            },
-        })
+        kwargs.update(
+            {
+                'auto_refresh_url': constants.REFRESH_ENDPOINT,
+                'token_updater': lambda token: save_token(session, token),
+                'auto_refresh_kwargs': {
+                    'client_id': settings.CENTRALAUTH_CLIENT_ID,
+                    'client_secret': settings.CENTRALAUTH_CLIENT_SECRET,
+                },
+            }
+        )
     return OAuth2Session(client_id=settings.CENTRALAUTH_CLIENT_ID, token=token, **kwargs)
 
 
@@ -92,7 +94,12 @@ def update_user(user, **kwargs):
     """Update user attributes and permissions """
     permissions = kwargs.pop('permissions', [])
     allowed_attributes = (
-        'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser'
+        'first_name',
+        'last_name',
+        'email',
+        'is_active',
+        'is_staff',
+        'is_superuser',
     )
     for attr, value in kwargs.items():
         if attr in allowed_attributes and hasattr(user, attr):
@@ -105,7 +112,10 @@ def update_user(user, **kwargs):
 
     updated_permissions = []
     for permission in permissions:
-        updated_permissions.append(Permission.objects.get(
-            content_type__app_label=permission[0], codename=permission[1]))
+        updated_permissions.append(
+            Permission.objects.get(
+                content_type__app_label=permission[0], codename=permission[1]
+            )
+        )
 
     m2m_set_objects(user.user_permissions, updated_permissions)

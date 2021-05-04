@@ -1,4 +1,5 @@
-import mock
+from unittest import mock
+
 import pytest
 from django.contrib.auth import get_user_model
 
@@ -12,7 +13,6 @@ User = get_user_model()
 
 @pytest.mark.django_db
 class TestOAuthBackend:
-
     def test_get_user(self):
         user = UserFactory.create()
         backend = OAuthBackend()
@@ -35,9 +35,7 @@ class TestOAuthBackend:
 
     @mock.patch('centralauth.client.services.user_details')
     def test_authenticate_create_new_user(self, user_details_mock, rf):
-        user_details_mock.return_value = {
-            'username': 'test.foobar'
-        }
+        user_details_mock.return_value = {'username': 'test.foobar'}
         request = rf.get('/')
         backend = OAuthBackend()
         user = backend.authenticate(request, '12345')
@@ -48,10 +46,7 @@ class TestOAuthBackend:
     def test_authenticate_update_existing_user(self, user_details_mock, rf):
         user = UserFactory.create(username='Foo', first_name='Old First Name')
         users_count = User.objects.count()
-        user_details_mock.return_value = {
-            'username': 'Foo',
-            'first_name': 'New First Name'
-        }
+        user_details_mock.return_value = {'username': 'Foo', 'first_name': 'New First Name'}
         request = rf.get('/')
         backend = OAuthBackend()
         user = backend.authenticate(request, '12345')

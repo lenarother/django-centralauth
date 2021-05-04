@@ -1,6 +1,6 @@
 import sys
+from unittest import mock
 
-import mock
 import pytest
 from django.core.management import call_command
 from django.core.management.base import CommandError
@@ -15,7 +15,6 @@ else:
 
 @pytest.mark.django_db
 class TestSyncPerms:
-
     @mock.patch('centralauth.client.services.register_perms')
     def test_register_perms_called(self, register_perms_mock):
         class ResponseMock:
@@ -30,6 +29,7 @@ class TestSyncPerms:
 
             def json(self):
                 return self.result
+
         response = ResponseMock()
 
         out = StringIO()

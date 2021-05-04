@@ -1,10 +1,10 @@
 from importlib import import_module
 from time import time
+from unittest.mock import patch
 
 import pytest
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
-from mock import patch
 from oauthlib.oauth2.rfc6749.errors import FatalClientError
 
 from centralauth.client.middleware import CentralAuthSyncMiddleware
@@ -18,7 +18,6 @@ session_engine = import_module(settings.SESSION_ENGINE)
 
 @pytest.mark.django_db
 class TestCentralAuthSyncMiddleware:
-
     def test_no_user(self, rf):
         request = rf.get('/')
         request.user = AnonymousUser()

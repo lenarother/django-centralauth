@@ -9,8 +9,7 @@ class ClientConfig(AppConfig):
 
     def ready(self):
         if 'centralauth.client.middleware.CentralAuthSyncMiddleware' not in (
-            getattr(settings, 'MIDDLEWARE', ()) or
-            getattr(settings, 'MIDDLEWARE_CLASSES', ())
+            getattr(settings, 'MIDDLEWARE', ()) or getattr(settings, 'MIDDLEWARE_CLASSES', ())
         ):
             raise ImproperlyConfigured(
                 'You cannot use CentralAuth without installing '

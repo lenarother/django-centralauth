@@ -5,8 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 def provider_url():
     url = getattr(settings, 'CENTRALAUTH_PROVIDER_URL', None)
     if not url:
-        raise ImproperlyConfigured(
-            'Centralauth requires CENTRALAUTH_PROVIDER_URL setting.')
+        raise ImproperlyConfigured('Centralauth requires CENTRALAUTH_PROVIDER_URL setting.')
     return url.rstrip('/')
 
 

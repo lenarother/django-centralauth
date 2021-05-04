@@ -5,12 +5,18 @@ from oauthlib.oauth2 import AccessDeniedError
 
 
 class CentralauthOAuthBackend(OAuthLibCore):
-
     def create_authorization_response(self, request, scopes, credentials, allow):
-        if not credentials['request'].client.applicationuser_set.filter(
-            user=request.user
-        ).exists():
-            raise FatalClientError(error=AccessDeniedError(ugettext(
-                'Your user account is not configured for the requested application.')))
+        if (
+            not credentials['request']
+            .client.applicationuser_set.filter(user=request.user)
+            .exists()
+        ):
+            raise FatalClientError(
+                error=AccessDeniedError(
+                    ugettext(
+                        'Your user account is not configured for the requested application.'
+                    )
+                )
+            )
 
         return super().create_authorization_response(request, scopes, credentials, allow)

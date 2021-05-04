@@ -1,6 +1,15 @@
 Changelog
 =========
 
+2.0.0 (2021-05-04)
+------------------
+
+* Add support for Python 3.7, 3.8 and 3.9
+* Add support for Django 3
+* Drop support for Python 2
+* Drop support for Django older than 2.2
+
+
 1.2.0 (2019-02-22)
 ------------------
 

@@ -21,15 +21,16 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-
     'centralauth.client',  # client
 ]
 
 if 'provider' in os.environ.get('TOX_ENV_NAME', 'provider'):
-    INSTALLED_APPS.extend([
-        'oauth2_provider',  # provider
-        'centralauth.provider',  # provider
-    ])
+    INSTALLED_APPS.extend(
+        [
+            'oauth2_provider',  # provider
+            'centralauth.provider',  # provider
+        ]
+    )
 
 MIDDLEWARE = MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,10 +48,12 @@ AUTHENTICATION_BACKENDS = [
     'centralauth.client.backends.OAuthBackend',
 ]
 
-TEMPLATES = [{
-    'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'APP_DIRS': True,
-}]
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    }
+]
 
 LOGIN_URL = '/admin/login/'
 

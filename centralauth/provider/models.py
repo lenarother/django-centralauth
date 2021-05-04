@@ -26,7 +26,8 @@ class ApplicationPermission(models.Model):
     """Model for holding all permissions available for application."""
 
     application = models.ForeignKey(
-        Application, verbose_name=_('Application'), on_delete=models.CASCADE)
+        Application, verbose_name=_('Application'), on_delete=models.CASCADE
+    )
     repr = models.CharField(_('Name'), max_length=255)
     codename = models.CharField(_('Code name'), max_length=100)
     app_label = models.CharField(_('App label'), max_length=100)
@@ -51,9 +52,11 @@ class ApplicationPermissionGroup(models.Model):
 
     name = models.CharField(_('Name'), max_length=255)
     application = models.ForeignKey(
-        Application, verbose_name=_('Application'), on_delete=models.CASCADE)
+        Application, verbose_name=_('Application'), on_delete=models.CASCADE
+    )
     permissions = models.ManyToManyField(
-        ApplicationPermission, verbose_name=_('Permissions'), blank=True)
+        ApplicationPermission, verbose_name=_('Permissions'), blank=True
+    )
 
     date_created = models.DateTimeField(_('Name'), auto_now_add=True)
 
@@ -70,10 +73,10 @@ class ApplicationPermissionGroup(models.Model):
 class ApplicationUser(models.Model):
     """Model for managing user permissions within application."""
 
-    user = models.ForeignKey(
-        User, verbose_name=_('User'), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.CASCADE)
     application = models.ForeignKey(
-        Application, verbose_name=_('Application'), on_delete=models.CASCADE)
+        Application, verbose_name=_('Application'), on_delete=models.CASCADE
+    )
 
     is_superuser = models.BooleanField(
         _('Superuser status'),
@@ -98,9 +101,11 @@ class ApplicationUser(models.Model):
     )
 
     permissions = models.ManyToManyField(
-        ApplicationPermission, verbose_name=_('Permissions'), blank=True)
+        ApplicationPermission, verbose_name=_('Permissions'), blank=True
+    )
     groups = models.ManyToManyField(
-        ApplicationPermissionGroup, verbose_name=_('Groups'), blank=True)
+        ApplicationPermissionGroup, verbose_name=_('Groups'), blank=True
+    )
 
     date_created = models.DateTimeField(_('Date (created)'), auto_now_add=True)
 
@@ -118,10 +123,7 @@ class ApplicationUser(models.Model):
         Returns:
             list: list of ids of all user permissions.
         """
-        result = set([
-            (perm.app_label, perm.codename)
-            for perm in self.permissions.all()
-        ])
+        result = set([(perm.app_label, perm.codename) for perm in self.permissions.all()])
 
         for group in self.groups.all():
             for perm in group.permissions.all():

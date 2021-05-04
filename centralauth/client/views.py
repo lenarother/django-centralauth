@@ -33,8 +33,7 @@ class LoginView(View):
             client_id=settings.CENTRALAUTH_CLIENT_ID,
             redirect_uri=get_oauth_redirect_url(self.request, next_url),
         )
-        authorization_url, state = oauth.authorization_url(
-            constants.AUTHORISATION_ENDPOINT)
+        authorization_url, state = oauth.authorization_url(constants.AUTHORISATION_ENDPOINT)
 
         self.request.session[OAUTH_STATE_KEY] = state
 
@@ -53,7 +52,7 @@ class CallbackView(View):
         state = self.request.GET.get('state', None)
         next_url = self.request.GET.get('next', None)
 
-        state_ok = (state == self.request.session.get(OAUTH_STATE_KEY, ''))
+        state_ok = state == self.request.session.get(OAUTH_STATE_KEY, '')
         if not grant_code or not state or not state_ok:
             raise PermissionDenied
 

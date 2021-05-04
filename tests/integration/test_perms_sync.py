@@ -1,4 +1,5 @@
-import mock
+from unittest import mock
+
 import pytest
 
 from centralauth.client.services import register_perms
@@ -7,14 +8,14 @@ from tests.factories import ApplicationFactory
 
 @pytest.mark.django_db
 class TestPermissionsSync:
-
     @mock.patch('centralauth.client.services.requests.post')
     @mock.patch('centralauth.client.services.Permission.objects.all')
     def test_perms_sync(self, perm_manager_mock, post_mock, settings, client):
         app = ApplicationFactory(
             client_id=settings.CENTRALAUTH_CLIENT_ID,
             client_secret=settings.CENTRALAUTH_CLIENT_SECRET,
-            redirect_uris='https://testserver/client/login/callback/')
+            redirect_uris='https://testserver/client/login/callback/',
+        )
 
         class MockContentType:
             app_label = 'TestApp'
@@ -31,11 +32,7 @@ class TestPermissionsSync:
         register_perms()
 
         data = post_mock.call_args_list[0][1]['data']
-        client.post(
-            '/provider/perms/',
-            data=data,
-            content_type='application/json',
-            secure=True)
+        client.post('/provider/perms/', data=data, content_type='application/json', secure=True)
 
         synced_perm = app.applicationpermission_set.first()
 

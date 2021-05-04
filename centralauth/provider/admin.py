@@ -3,7 +3,11 @@ from django.contrib import admin
 from django.forms import models
 from django.utils.translation import ugettext_lazy as _
 from oauth2_provider.models import (
-    get_access_token_model, get_application_model, get_grant_model, get_refresh_token_model)
+    get_access_token_model,
+    get_application_model,
+    get_grant_model,
+    get_refresh_token_model,
+)
 
 from .models import ApplicationPermissionGroup, ApplicationUser
 
@@ -26,21 +30,20 @@ class ApplicationPermissionGroupAdminForm(models.ModelForm):
     )
 
     class Meta:
-        widgets = {
-            'permissions': admin.widgets.FilteredSelectMultiple(_('Permissions'), False)
-        }
+        widgets = {'permissions': admin.widgets.FilteredSelectMultiple(_('Permissions'), False)}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
-            self.fields['permissions'].queryset = (
-                self.instance.application.applicationpermission_set.all())
+            self.fields[
+                'permissions'
+            ].queryset = self.instance.application.applicationpermission_set.all()
 
-            self.fields['users'].queryset = (
-                self.instance.application.applicationuser_set.all())
+            self.fields['users'].queryset = self.instance.application.applicationuser_set.all()
 
             self.initial['users'] = self.instance.applicationuser_set.values_list(
-                'pk', flat=True)
+                'pk', flat=True
+            )
 
 
 @admin.register(ApplicationPermissionGroup)
@@ -53,7 +56,10 @@ class ApplicationPermissionGroupAdmin(admin.ModelAdmin):
 
     def get_fields(self, request, obj=None):
         if obj:
-            return self.fields + ('users', 'permissions',)
+            return self.fields + (
+                'users',
+                'permissions',
+            )
         return self.fields
 
     def get_readonly_fields(self, request, obj=None):
@@ -74,17 +80,20 @@ class ApplicationPermissionGroupAdmin(admin.ModelAdmin):
 
 
 class ApplicationUserAdminForm(models.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
-            self.fields['groups'].queryset = (
-                self.instance.application.applicationpermissiongroup_set.all())
+            self.fields[
+                'groups'
+            ].queryset = self.instance.application.applicationpermissiongroup_set.all()
 
 
 @admin.register(ApplicationUser)
 class ApplicationUserAdmin(admin.ModelAdmin):
-    list_display = ('user', 'application',)
+    list_display = (
+        'user',
+        'application',
+    )
     list_filter = ('application',)
     search_fields = ('user__username',)
     form = ApplicationUserAdminForm
@@ -102,7 +111,6 @@ class ApplicationUserAdmin(admin.ModelAdmin):
 
 
 class ApplicationUserInlineFormset(models.BaseInlineFormSet):
-
     def get_form_kwargs(self, index):
         kwargs = super().get_form_kwargs(index)
         if self.instance and self.instance.pk:
@@ -111,13 +119,13 @@ class ApplicationUserInlineFormset(models.BaseInlineFormSet):
 
 
 class ApplicationUserInlineForm(models.ModelForm):
-
     def __init__(self, *args, **kwargs):
         parent_instance = kwargs.pop('parent_instance', None)
         super().__init__(*args, **kwargs)
         if parent_instance:
-            self.fields['groups'].queryset = (
-                parent_instance.applicationpermissiongroup_set.all())
+            self.fields[
+                'groups'
+            ].queryset = parent_instance.applicationpermissiongroup_set.all()
 
 
 class ApplicationUserInline(admin.TabularInline):
@@ -129,7 +137,6 @@ class ApplicationUserInline(admin.TabularInline):
 
 
 class ApplicationAdminForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].required = True
