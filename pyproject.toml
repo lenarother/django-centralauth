@@ -26,8 +26,8 @@ include = ["LICENSE.rst"]
 python = ">=3.6,<4"
 importlib-metadata = {version = "*", python = "<3.8"}
 
-Django = ">=2"
-Sphinx = ">=3.5"
+Django = ">=2.2"
+Sphinx = {version = ">=3.5", optional = true}
 
 requests = ">=2.25"
 requests-oauthlib = ">=1.3"
