@@ -5,17 +5,18 @@ django-centralauth
    :target: https://pypi.org/project/django-centralauth/
    :alt: Latest Version
 
-.. image:: https://codecov.io/gh/moccu/django-centralauth/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/moccu/django-centralauth
+.. image:: https://github.com/lenarother/django-centralauth/workflows/Test/badge.svg?branch=master
+   :target: https://github.com/lenarother/django-centralauth/actions?workflow=Test
+   :alt: CI Status
+
+.. image:: https://codecov.io/gh/lenarother/django-centralauth/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/lenarother/django-centralauth
    :alt: Coverage Status
 
 .. image:: https://readthedocs.org/projects/django-centralauth/badge/?version=latest
    :target: https://django-centralauth.readthedocs.io/en/stable/?badge=latest
    :alt: Documentation Status
 
-.. image:: https://github.com/lenarother/django-centralauth/workflows/Test/badge.svg?branch=master
-   :target: https://github.com/lenarother/django-centralauth/actions?workflow=Test
-   :alt: CI Status
 
 django-centralauth solves the problem of managing user access and permissions
 from multiple projects in one central place.
