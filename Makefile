@@ -1,6 +1,8 @@
-.PHONY: clean correct docs pytests tests coverage-html
+.PHONY: clean correct docs pytests tests coverage-html release
+.ONESHELL: release
 
 clean:
+	find . -name '*.pyc' -delete
 	rm -fr build/ dist/ htmlcov/
 	poetry run make -C docs clean
 
@@ -19,3 +21,9 @@ tests:
 
 coverage-html: pytests
 	poetry run coverage html
+
+release:
+	@VERSION=`poetry version -s`
+	@echo About to release $${VERSION}
+	@echo [ENTER] to continue; read
+	git tag -a "$${VERSION}" -m "Version $${VERSION}" && git push --follow-tags
