@@ -3,7 +3,7 @@
 
 clean:
 	find . -name '*.pyc' -delete
-	rm -fr build/ dist/ htmlcov/
+	rm -fr build/ dist/ htmlcov/ __pycache__
 	poetry run make -C docs clean
 
 correct:
