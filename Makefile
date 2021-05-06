@@ -23,7 +23,6 @@ coverage-html: pytests
 	poetry run coverage html
 
 release:
-	@VERSION=`poetry version -s`
-	@echo About to release $${VERSION}
+	@echo About to release `poetry version -s`
 	@echo [ENTER] to continue; read
-	git tag -a "$${VERSION}" -m "Version $${VERSION}" && git push --follow-tags
+	git tag -a "`poetry version -s`" -m "Version `poetry version -s`" && git push --follow-tags
