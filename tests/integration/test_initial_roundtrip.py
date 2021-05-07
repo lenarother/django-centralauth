@@ -14,7 +14,6 @@ from tests.factories import (
 User = get_user_model()
 
 
-@pytest.mark.skip(reason='TODO: Fix me')
 @pytest.mark.django_db
 def test_initial_roundtrip(client, settings):
     user = UserFactory(username='foo', is_staff=True)
@@ -63,7 +62,7 @@ def test_initial_roundtrip(client, settings):
         response = client_method(path=url, data=data, secure=True, **extra)
         response.request = Mock()
         response.text = response.content
-        response.headers = {}
+        response.headers = {'Content-Type': 'application/json'}
         response.raise_for_status = lambda: None
         return response
 
