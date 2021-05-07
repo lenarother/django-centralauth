@@ -20,7 +20,7 @@ clean:
 	-rm -rf $(BUILDDIR)/*
 
 apidoc:
-	sphinx-apidoc --separate --force --module-first -H "API Reference"  -o api ../centralauth ../centralauth/*/migrations/*
+	sphinx-apidoc --separate --force --module-first -H "django-centralauth"  -o api ../centralauth ../centralauth/*/migrations/*
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
@@ -32,4 +32,3 @@ linkcheck:
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in $(BUILDDIR)/linkcheck/output.txt."
-
